@@ -1,0 +1,48 @@
+@import '../../variables.scss';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  line-height: 20px;
+  &:hover {
+    background-color: $hover-color;
+    cursor: pointer;
+    .checkbox {
+      background-color: $hover-color;
+    }
+  }
+}
+
+.label {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-left: 50px;
+  &:hover {
+    background-color: $hover-color;
+    cursor: pointer;
+  }
+}
+.input {
+  appearance: none;
+  position: absolute;
+  &:checked + .checkbox {
+    background-image: url(../../assets/img/checkMark.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-color: $main-active-color;
+  }
+}
+
+.checkbox {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: $inside-background-color;
+  border: 1px solid #9abbce;
+  border-radius: 2px;
+  margin-left: -30px;
+}

@@ -1,0 +1,11 @@
+@import '../../variables.scss';
+
+.list {
+  display: flex;
+  width: fit-content;
+  margin-bottom: 20px;
+
+  @media (max-width: $middle-mobail-size) {
+    max-width: 320px;
+  }
+}

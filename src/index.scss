@@ -1,5 +1,19 @@
+@import 'variables.scss';
+
 *,
 body {
   margin: 0;
   padding: 0;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+#root {
+  background: $main-background-color;
+  font-family: 'Inter', sans-serif;
+  color: $main-text-color;
+  height: 100%;
 }

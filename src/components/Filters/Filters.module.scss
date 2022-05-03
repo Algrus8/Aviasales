@@ -1,0 +1,26 @@
+@import '../../variables.scss';
+
+.card {
+  width: 232px;
+  height: 252px;
+  background-color: $inside-background-color;
+  border-radius: 5px;
+  @media (max-width: $max-mobail-size) {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 504px;
+  }
+
+  @media (max-width: $middle-mobail-size) {
+    max-width: 320px;
+  }
+}
+.title {
+  margin: 20px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+}

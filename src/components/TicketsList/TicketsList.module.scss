@@ -1,0 +1,8 @@
+@import '../../variables.scss';
+
+.ticketsCards {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  max-width: 504px;
+}
