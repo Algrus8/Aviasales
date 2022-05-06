@@ -4,7 +4,6 @@ import classes from './Ticket.module.scss'
 
 export default function Ticket() {
   const { card, header, price } = classes
-  console.log(card)
   return (
     <div className={card}>
       <div className={header}>

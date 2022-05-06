@@ -1,10 +1,13 @@
+import classNames from 'classnames'
+
 import classes from './Priority.module.scss'
 
-export default function Priority(props) {
-  const { children } = props
-  const { text, wrapper } = classes
+export default function Priority({ action, isActive, children }) {
+  const { text, wrapper, active } = classes
+  const buttonClass = classNames({ [wrapper]: true, [active]: isActive })
+
   return (
-    <button className={wrapper}>
+    <button className={buttonClass} onClick={action}>
       <p className={text}>{children}</p>
     </button>
   )

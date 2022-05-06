@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom/client'
 
 import './index.scss'
 import App from './components/App'
+import reducers from './reducers'
+import { legacy_createStore as createStore, bindActionCreators } from 'redux'
+import { Provider } from 'react-redux'
+
+const store = createStore(reducers)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>
 )

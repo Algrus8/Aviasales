@@ -41,3 +41,10 @@
   @media (max-width: $max-mobail-size) {
   }
 }
+
+.active {
+  background-color: $main-active-color;
+  .text {
+    color: $active-text-color;
+  }
+}

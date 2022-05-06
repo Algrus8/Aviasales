@@ -1,6 +1,7 @@
 import logoImage from '../../assets/img/logo.svg'
 
 import classes from './Header.module.scss'
+
 export default function Header() {
   const { logo, container } = classes
 
