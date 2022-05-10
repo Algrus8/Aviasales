@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 import Header from '../Header'
 import PriorityList from '../PriorityList'
 import Filters from '../Filters'
 import TicketsList from '../TicketsList'
-import Ticket from '../Ticket'
-import ShowMore from '../ShowMore'
-
 import classes from './App.module.scss'
 
-export default function App() {
+function App({ fetchTickets, tickets }) {
   const { wrapper, main } = classes
+  const { searchId } = tickets
+
+  useEffect(() => {
+    if (searchId) {
+      fetchTickets(searchId)
+    }
+  }, [searchId])
+
   return (
     <React.Fragment>
       <Header />
@@ -18,16 +25,17 @@ export default function App() {
         <Filters />
         <div className={main}>
           <PriorityList />
-          <TicketsList>
-            <Ticket />
-            <Ticket />
-            <Ticket />
-            <Ticket />
-            <Ticket />
-          </TicketsList>
-          <ShowMore />
+          <TicketsList />
         </div>
       </div>
     </React.Fragment>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    tickets: state.tickets,
+  }
+}
+
+export default connect(mapStateToProps, actions)(App)

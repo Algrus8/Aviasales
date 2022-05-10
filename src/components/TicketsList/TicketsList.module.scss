@@ -6,3 +6,21 @@
   flex-shrink: 1;
   max-width: 504px;
 }
+
+.more {
+  width: 502px;
+  height: 50px;
+  border: none;
+  background-color: $main-active-color;
+  margin-bottom: 50px;
+  border-radius: 5px;
+  color: $active-text-color;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  @media (max-width: $middle-mobail-size) {
+    max-width: 320px;
+  }
+}

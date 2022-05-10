@@ -5,25 +5,25 @@ import * as actions from '../../actions'
 
 import classes from './Filters.module.scss'
 
-function Filters({ checkBoxes, all, nonStop, oneTransfer, twoTransfers, threeTransfers }) {
+function Filters({ checkBoxes, onAll, onNonStop, onOneTransfer, onTwoTransfers, onThreeTransfers }) {
   const { card, title } = classes
-
+  const { all, nonStop, oneTransfer, twoTransfers, threeTransfers } = checkBoxes
   return (
     <div className={card}>
       <p className={title}>Количество пересадок</p>
-      <Filter action={all} isChecked={checkBoxes.all}>
+      <Filter action={onAll} isChecked={all}>
         Все
       </Filter>
-      <Filter action={nonStop} isChecked={checkBoxes.nonStop}>
+      <Filter action={onNonStop} isChecked={nonStop}>
         Без пересадок
       </Filter>
-      <Filter action={oneTransfer} isChecked={checkBoxes.oneTransfer}>
+      <Filter action={onOneTransfer} isChecked={oneTransfer}>
         1 пересадка
       </Filter>
-      <Filter action={twoTransfers} isChecked={checkBoxes.twoTransfers}>
+      <Filter action={onTwoTransfers} isChecked={twoTransfers}>
         2 пересадки
       </Filter>
-      <Filter action={threeTransfers} isChecked={checkBoxes.threeTransfers}>
+      <Filter action={onThreeTransfers} isChecked={threeTransfers}>
         3 пересадки
       </Filter>
     </div>

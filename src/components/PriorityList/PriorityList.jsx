@@ -5,17 +5,17 @@ import Priority from '../Priority'
 
 import classes from './PriorityList.module.scss'
 
-function PriorityList({ priority, cheapest, fastest, optimal }) {
-  const { list } = classes
+function PriorityList({ priority, onCheapest, onFastest, onOptimal }) {
+  const { cheapest, fastest, optimal } = priority
   return (
-    <div className={list}>
-      <Priority action={cheapest} isActive={priority.cheapest}>
+    <div className={classes.list}>
+      <Priority action={onCheapest} isActive={cheapest}>
         Самый дешевый
       </Priority>
-      <Priority action={fastest} isActive={priority.fastest}>
+      <Priority action={onFastest} isActive={fastest}>
         Самый быстрый
       </Priority>
-      <Priority action={optimal} isActive={priority.optimal}>
+      <Priority action={onOptimal} isActive={optimal}>
         Оптимальный
       </Priority>
     </div>

@@ -1,9 +1,14 @@
 @import 'variables.scss';
-
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 *,
 body {
   margin: 0;
   padding: 0;
+}
+
+html,
+body {
+  background: $main-background-color;
 }
 
 button {
@@ -15,5 +20,4 @@ button {
   background: $main-background-color;
   font-family: 'Inter', sans-serif;
   color: $main-text-color;
-  height: 100%;
 }
