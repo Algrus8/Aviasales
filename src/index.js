@@ -8,9 +8,9 @@ import thunk from 'redux-thunk'
 import { fetchSearchId } from './actions'
 import './index.scss'
 import App from './components/App'
-import rootReducer from './reducers'
+import reducer from './reducers'
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 
 store.dispatch(fetchSearchId())
 

@@ -2,7 +2,9 @@ export const onCheapest = () => ({ type: 'CHEAPEST' })
 export const onFastest = () => ({ type: 'FASTEST' })
 export const onOptimal = () => ({ type: 'OPTIMAL' })
 
-export const onAll = () => ({ type: 'ALL' })
+export const onAll = () => (dispatch, getState) => {
+  dispatch({ type: 'ALL', payload: getState().checkBoxes })
+}
 export const onNonStop = () => ({ type: 'NON_STOP' })
 export const onOneTransfer = () => ({ type: 'ONE_TRANSFER' })
 export const onTwoTransfers = () => ({ type: 'TWO_TRANSFERS' })

@@ -5,9 +5,9 @@ import * as actions from '../../actions'
 
 import classes from './Filters.module.scss'
 
-function Filters({ checkBoxes, onAll, onNonStop, onOneTransfer, onTwoTransfers, onThreeTransfers }) {
+function Filters({ filters, onAll, onNonStop, onOneTransfer, onTwoTransfers, onThreeTransfers }) {
   const { card, title } = classes
-  const { all, nonStop, oneTransfer, twoTransfers, threeTransfers } = checkBoxes
+  const { all, nonStop, oneTransfer, twoTransfers, threeTransfers } = filters
   return (
     <div className={card}>
       <p className={title}>Количество пересадок</p>
@@ -32,7 +32,7 @@ function Filters({ checkBoxes, onAll, onNonStop, onOneTransfer, onTwoTransfers, 
 
 const mapStateToProps = (state) => {
   return {
-    checkBoxes: state.checkBoxes,
+    filters: state.filters,
   }
 }
 
