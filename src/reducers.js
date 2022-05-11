@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { store } from '../index'
 
 const initialPriority = {
   cheapest: true,
@@ -90,35 +89,58 @@ const initialTickets = {
   firstCall: true,
 }
 
-function tickets(state = initialTickets, action) {
+const tickets = (state = initialTickets, action) => {
   switch (action.type) {
     case 'SEARCH_ID':
       return { ...state, searchId: action.payload.searchId }
 
     case 'SEARCH_TICKETS':
-      const newArray = [].concat(...state.ticketsArr, action.payload.tickets)
-      const showMore = state.numberOfVisible % 500 || (state.numberOfVisible < 500 && !state.firstCall)
-      if (showMore) {
-        return {
-          ...state,
-          visible: [...state.ticketsArr.slice(0, state.numberOfVisible + 5)],
-          numberOfVisible: (state.numberOfVisible += 5),
-          firstCall: false,
-        }
-      }
       return {
         ...state,
-        ticketsArr: newArray,
+        ticketsArr: [].concat(...state.ticketsArr, action.payload.tickets),
         stop: action.payload.stop,
-        visible: [...state.ticketsArr.slice(0, state.numberOfVisible), ...action.payload.tickets.slice(0, 5)],
-        numberOfVisible: state.numberOfVisible + 5,
       }
 
+    case 'SHOW_MORE':
+      return {
+        ...state,
+        visible: [...state.ticketsArr.slice(0, state.numberOfVisible + 5)],
+        numberOfVisible: (state.numberOfVisible += 5),
+        firstCall: false,
+      }
+
+    case 'CHEAPEST':
+      return {
+        ...state,
+        visible: [...state.ticketsArr.sort((a, b) => a.price - b.price)].slice(0, state.numberOfVisible),
+      }
+
+    case 'FASTEST':
+      return {
+        ...state,
+        visible: [
+          ...state.ticketsArr.sort((a, b) => {
+            const durationA = a.segments.reduce((acc, value) => (acc += value.duration), 0)
+            const durationB = b.segments.reduce((acc, value) => (acc += value.duration), 0)
+
+            return durationA - durationB
+          }),
+        ].slice(0, state.numberOfVisible),
+      }
+    case 'OPTIMAL':
+      return {
+        ...state,
+        visible: [
+          ...state.ticketsArr.sort((a, b) => {
+            return a - b
+          }),
+        ].slice(0, state.numberOfVisible),
+      }
     default:
       return state
   }
 }
 
-const reducers = combineReducers({ priority, checkBoxes, tickets })
+const rootReducer = combineReducers({ priority, checkBoxes, tickets })
 
-export default reducers
+export default rootReducer

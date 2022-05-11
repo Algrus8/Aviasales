@@ -1,29 +1,40 @@
 import React from 'react'
-import classes from './TicketsList.module.scss'
 import { connect } from 'react-redux'
+
 import * as actions from '../../actions'
 import Ticket from '../Ticket/Ticket'
-import { generateKey } from '../..'
+
+import classes from './TicketsList.module.scss'
 
 const TicketsList = ({ visibleTickets }) => {
   return (
     <React.Fragment>
       <div className={classes.ticketsCards}>
-        {visibleTickets.map((ticket) => {
-          return <Ticket ticket={ticket} key={generateKey()} />
+        {visibleTickets.map((ticket, index) => {
+          return <Ticket ticket={ticket} key={index} />
         })}
       </div>
+      <Spinner />
       <ShowMore />
     </React.Fragment>
   )
 }
 
-let ShowMore = ({ fetchTickets, searchId, stop }) => {
-  const text = stop ? 'По данному запросу билетов больше нет' : ' Показать еще 5 билетов!'
-
+let Spinner = ({ stop }) => {
+  if (stop) {
+    return null
+  }
   return (
-    <button className={classes.more} onClick={() => fetchTickets(searchId)}>
-      {text}
+    <div className={classes.spinnerContainer}>
+      <div className={classes.spinner} />
+    </div>
+  )
+}
+
+let ShowMore = ({ onShowMore }) => {
+  return (
+    <button className={classes.more} onClick={() => onShowMore()}>
+      Показать еще 5 билетов!
     </button>
   )
 }
@@ -38,4 +49,5 @@ const mapStateToProps = (state) => {
 }
 
 ShowMore = connect(mapStateToProps, actions)(ShowMore)
+Spinner = connect(mapStateToProps, actions)(Spinner)
 export default connect(mapStateToProps, actions)(TicketsList)

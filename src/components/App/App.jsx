@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../../actions'
 
+import * as actions from '../../actions'
 import Header from '../Header'
 import PriorityList from '../PriorityList'
 import Filters from '../Filters'
 import TicketsList from '../TicketsList'
+
 import classes from './App.module.scss'
 
-function App({ fetchTickets, tickets }) {
+function App({ fetchTickets, tickets, onShowMore }) {
   const { wrapper, main } = classes
-  const { searchId } = tickets
-
+  const { searchId, ticketsArr, stop, firstCall } = tickets
   useEffect(() => {
-    if (searchId) {
+    if (searchId && !stop) {
       fetchTickets(searchId)
     }
-  }, [searchId])
+  }, [searchId, ticketsArr])
+
+  useEffect(() => {
+    if (ticketsArr.length && firstCall) {
+      onShowMore()
+    }
+  }, [ticketsArr])
 
   return (
     <React.Fragment>
