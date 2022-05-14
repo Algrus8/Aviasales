@@ -8,7 +8,7 @@ import thunk from 'redux-thunk'
 import { fetchSearchId } from './actions'
 import './index.scss'
 import App from './components/App'
-import reducer from './reducers'
+import reducer from './reducer'
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 
@@ -22,12 +22,3 @@ root.render(
     </React.StrictMode>
   </Provider>
 )
-
-// const generateKeyFunc = () => {
-//   let ids = 0
-//   return () => {
-//     return ids++
-//   }
-// }
-
-// export const generateKey = generateKeyFunc()

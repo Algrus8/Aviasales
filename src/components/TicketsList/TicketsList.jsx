@@ -6,7 +6,7 @@ import Ticket from '../Ticket/Ticket'
 
 import classes from './TicketsList.module.scss'
 
-const TicketsList = ({ visibleTickets }) => {
+const TicketsList = ({ visibleTickets, firstCall }) => {
   return (
     <React.Fragment>
       <div className={classes.ticketsCards}>
@@ -15,7 +15,8 @@ const TicketsList = ({ visibleTickets }) => {
         })}
       </div>
       <Spinner />
-      <ShowMore />
+      {!visibleTickets.length && !firstCall ? <NotFind /> : null}
+      {visibleTickets.length ? <ShowMore /> : null}
     </React.Fragment>
   )
 }
@@ -27,6 +28,7 @@ let Spinner = ({ stop }) => {
   return (
     <div className={classes.spinnerContainer}>
       <div className={classes.spinner} />
+      <p>Загружаем все билеты</p>
     </div>
   )
 }
@@ -34,8 +36,16 @@ let Spinner = ({ stop }) => {
 let ShowMore = ({ onShowMore }) => {
   return (
     <button className={classes.more} onClick={() => onShowMore()}>
-      Показать еще 5 билетов!
+      <p> Показать еще 5 билетов!</p>
     </button>
+  )
+}
+
+let NotFind = () => {
+  return (
+    <div className={classes.notFind}>
+      <p> Рейсов, подходящих под заданные фильтры, не найдено</p>
+    </div>
   )
 }
 
@@ -45,9 +55,11 @@ const mapStateToProps = (state) => {
     stop: state.tickets.stop,
     searchId: state.tickets.searchId,
     visibleTickets: state.tickets.visible,
+    firstCall: state.tickets.firstCall,
   }
 }
 
+NotFind = connect(mapStateToProps, actions)(NotFind)
 ShowMore = connect(mapStateToProps, actions)(ShowMore)
 Spinner = connect(mapStateToProps, actions)(Spinner)
 export default connect(mapStateToProps, actions)(TicketsList)

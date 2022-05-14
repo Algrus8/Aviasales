@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
+import logoImage from '../../assets/img/logo.svg'
 import * as actions from '../../actions'
-import Header from '../Header'
 import PriorityList from '../PriorityList'
 import Filters from '../Filters'
 import TicketsList from '../TicketsList'
 
 import classes from './App.module.scss'
 
-function App({ fetchTickets, tickets, onShowMore, onCheapest, onAll }) {
-  const { wrapper, main } = classes
+function App({ fetchTickets, tickets, onShowMore, onCheapest, onAll, onFirstCall }) {
+  const { wrapper, main, headerContainer, logo } = classes
   const { searchId, ticketsArr, stop, firstCall } = tickets
   useEffect(() => {
     if (searchId && !stop) {
@@ -22,14 +22,16 @@ function App({ fetchTickets, tickets, onShowMore, onCheapest, onAll }) {
     if (ticketsArr.length && firstCall) {
       onCheapest()
       onAll()
-
       onShowMore()
+      onFirstCall()
     }
   }, [ticketsArr])
 
   return (
-    <React.Fragment>
-      <Header />
+    <>
+      <header className={headerContainer}>
+        <img src={logoImage} alt="logo" className={logo} />
+      </header>
       <div className={wrapper}>
         <Filters />
         <div className={main}>
@@ -37,7 +39,7 @@ function App({ fetchTickets, tickets, onShowMore, onCheapest, onAll }) {
           <TicketsList />
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 
