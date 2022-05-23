@@ -9,7 +9,7 @@ import TicketsList from '../TicketsList'
 
 import classes from './App.module.scss'
 
-function App({ fetchTickets, tickets, onShowMore, onCheapest, onAll, onFirstCall }) {
+function App({ fetchTickets, tickets, onCheapest, onAll, onFirstCall }) {
   const { wrapper, main, headerContainer, logo } = classes
   const { searchId, ticketsArr, stop, firstCall } = tickets
   useEffect(() => {
@@ -22,7 +22,6 @@ function App({ fetchTickets, tickets, onShowMore, onCheapest, onAll, onFirstCall
     if (ticketsArr.length && firstCall) {
       onCheapest()
       onAll()
-      onShowMore()
       onFirstCall()
     }
   }, [ticketsArr])

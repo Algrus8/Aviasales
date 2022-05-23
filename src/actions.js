@@ -15,7 +15,8 @@ export const fetchSearchId = () => async (dispatch) => {
     const json = await response.json()
     dispatch({ type: 'SEARCH_ID', payload: json })
   } catch (error) {
-    dispatch(fetchSearchId())
+    if (navigator.onLine) dispatch(fetchSearchId())
+    if (!navigator.onLine) setTimeout(() => dispatch(fetchSearchId()), 5000)
     throw new Error(error.message)
   }
 }
@@ -26,7 +27,8 @@ export const fetchTickets = (searchId) => async (dispatch) => {
     const json = await response.json()
     dispatch({ type: 'SEARCH_TICKETS', payload: json })
   } catch (error) {
-    dispatch(fetchTickets(searchId))
+    if (navigator.onLine) dispatch(fetchTickets(searchId))
+    if (!navigator.onLine) setTimeout(() => dispatch(fetchTickets(searchId)), 5000)
     throw new Error(error.message)
   }
 }
