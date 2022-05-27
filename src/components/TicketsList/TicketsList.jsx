@@ -6,18 +6,24 @@ import Ticket from '../Ticket/Ticket'
 
 import classes from './TicketsList.module.scss'
 
-const TicketsList = ({ visibleTickets, firstCall }) => {
+const TicketsList = ({ visibleTickets, firstCall, error }) => {
   return (
-    <React.Fragment>
+    <>
+      {error ? (
+        <div>
+          <p className={classes.error}>{`Что-то пошло не так: ${error}`}</p>
+        </div>
+      ) : (
+        <Spinner />
+      )}
       <div className={classes.ticketsCards}>
         {visibleTickets.map((ticket, index) => {
           return <Ticket ticket={ticket} key={index} />
         })}
       </div>
-      <Spinner />
       {!visibleTickets.length && !firstCall ? <NotFind /> : null}
       {visibleTickets.length ? <ShowMore /> : null}
-    </React.Fragment>
+    </>
   )
 }
 
@@ -56,6 +62,7 @@ const mapStateToProps = (state) => {
     searchId: state.tickets.searchId,
     visibleTickets: state.tickets.visible,
     firstCall: state.tickets.firstCall,
+    error: state.tickets.error,
   }
 }
 

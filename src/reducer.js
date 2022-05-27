@@ -15,9 +15,9 @@ const initialState = {
     searchId: null,
     ticketsArr: [],
     visible: [],
-    sorted: [],
     firstCall: true,
     stop: false,
+    error: false,
   },
 }
 
@@ -30,16 +30,16 @@ const calculateVisible = (sorted, filters, numberOfVisible) => {
     const thereStops = ticket.segments[0].stops.length
     const backStops = ticket.segments[1].stops.length
 
-    if (filters.nonStop && thereStops === 0 && backStops === 0) {
+    if (filters.nonStop && (thereStops === 0 || backStops === 0)) {
       return ticket
     }
-    if (filters.oneTransfer && thereStops === 1 && backStops === 1) {
+    if (filters.oneTransfer && (thereStops === 1 || backStops === 1)) {
       return ticket
     }
-    if (filters.twoTransfers && thereStops === 2 && backStops === 2) {
+    if (filters.twoTransfers && (thereStops === 2 || backStops === 2)) {
       return ticket
     }
-    if (filters.threeTransfers && thereStops === 3 && backStops === 3) {
+    if (filters.threeTransfers && (thereStops === 3 || backStops === 3)) {
       return ticket
     }
     return
@@ -86,6 +86,7 @@ const calculateSorted = (priority, tickets) => {
 const reducer = (state = initialState, action) => {
   const { type } = action
   const { ticketsArr } = state.tickets
+  const { priority } = state
   const numberOfVisible = state.tickets.visible.length
 
   if (type === 'CHEAPEST') {
@@ -96,7 +97,6 @@ const reducer = (state = initialState, action) => {
       priority,
       tickets: {
         ...state.tickets,
-        sorted,
         visible: calculateVisible(sorted, state.filters, numberOfVisible),
       },
     }
@@ -115,7 +115,6 @@ const reducer = (state = initialState, action) => {
       priority,
       tickets: {
         ...state.tickets,
-        sorted,
         visible: calculateVisible(sorted, state.filters, numberOfVisible),
       },
     }
@@ -135,7 +134,6 @@ const reducer = (state = initialState, action) => {
       priority,
       tickets: {
         ...state.tickets,
-        sorted,
         visible: calculateVisible(sorted, state.filters, numberOfVisible),
       },
     }
@@ -152,7 +150,7 @@ const reducer = (state = initialState, action) => {
       filters: newFilters,
       tickets: {
         ...state.tickets,
-        visible: calculateVisible(state.tickets.sorted, newFilters, numberOfVisible),
+        visible: calculateVisible(calculateSorted(priority, ticketsArr), newFilters, numberOfVisible),
       },
     }
   }
@@ -165,7 +163,7 @@ const reducer = (state = initialState, action) => {
       filters: newFilters,
       tickets: {
         ...state.tickets,
-        visible: calculateVisible(state.tickets.sorted, newFilters, numberOfVisible),
+        visible: calculateVisible(calculateSorted(priority, ticketsArr), newFilters, numberOfVisible),
       },
     }
   }
@@ -177,7 +175,7 @@ const reducer = (state = initialState, action) => {
       filters: newFilters,
       tickets: {
         ...state.tickets,
-        visible: calculateVisible(state.tickets.sorted, newFilters, numberOfVisible),
+        visible: calculateVisible(calculateSorted(priority, ticketsArr), newFilters, numberOfVisible),
       },
     }
   }
@@ -189,7 +187,7 @@ const reducer = (state = initialState, action) => {
       filters: newFilters,
       tickets: {
         ...state.tickets,
-        visible: calculateVisible(state.tickets.sorted, newFilters, numberOfVisible),
+        visible: calculateVisible(calculateSorted(priority, ticketsArr), newFilters, numberOfVisible),
       },
     }
   }
@@ -200,7 +198,7 @@ const reducer = (state = initialState, action) => {
       filters: newFilters,
       tickets: {
         ...state.tickets,
-        visible: calculateVisible(state.tickets.sorted, newFilters, numberOfVisible),
+        visible: calculateVisible(calculateSorted(priority, ticketsArr), newFilters, numberOfVisible),
       },
     }
   }
@@ -217,7 +215,6 @@ const reducer = (state = initialState, action) => {
         ...state.tickets,
         ticketsArr: [].concat(ticketsArr, action.payload.tickets),
         stop: action.payload.stop,
-        sorted,
         visible: calculateVisible(sorted, state.filters, numberOfVisible),
       },
     }
@@ -228,7 +225,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       tickets: {
         ...state.tickets,
-        visible: calculateVisible(state.tickets.sorted, state.filters, numberOfVisible + 5),
+        visible: calculateVisible(calculateSorted(priority, ticketsArr), state.filters, numberOfVisible + 5),
       },
     }
   }
@@ -242,7 +239,15 @@ const reducer = (state = initialState, action) => {
       },
     }
   }
-
+  if (type === 'ERROR') {
+    return {
+      ...state,
+      tickets: {
+        ...state.tickets,
+        error: action.payload,
+      },
+    }
+  }
   return state
 }
 
